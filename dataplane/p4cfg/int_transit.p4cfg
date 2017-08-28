@@ -1,0 +1,152 @@
+{
+    "tables": {
+        "tbl_not_int_drop": {
+            "default_rule": {
+                "action": { "type": "do_not_int_drop" }, 
+                "name": "not_int"
+            }
+        }, 
+        "tbl_forward": {
+            "rules": [
+                {
+                    "name": "v2_to_v0", 
+                    "action": {
+                        "type": "do_forward",
+                        "data": {
+                            "espec": { "value": "v0.0" }
+                        }
+                    }, 
+                    "match": {
+                        "standard_metadata.ingress_port": { "value": "v0.2" }
+                    }
+                }, 
+                {
+                    "name": "v0_to_v1", 
+                    "action": {
+                        "type": "do_forward",
+                        "data": {
+                            "espec": { "value": "v0.1" }
+                        }
+                    }, 
+                    "match": {
+                        "standard_metadata.ingress_port": { "value": "v0.0" }
+                    }
+                }, 
+                {
+                    "name": "v1_to_v2", 
+                    "action": {
+                        "type": "do_forward",
+                        "data": {
+                            "espec": { "value": "v0.2" }
+                        }
+                    }, 
+                    "match": {
+                        "standard_metadata.ingress_port": { "value": "v0.1" }
+                    }
+                } 
+            ]
+        },
+        "int_inst_0": {
+            "default_rule": {
+                "name": "do_int",
+                "action": { "type": "int_set_header_0" }
+            }
+        },
+        "int_inst_1": {
+            "default_rule": {
+                "name": "do_int",
+                "action": { "type": "int_set_header_1" }
+            }
+        },
+        "int_inst_2": {
+            "default_rule": {
+                "name": "do_int",
+                "action": { "type": "int_set_header_2" }
+            }
+        },
+        "int_inst_3": {
+            "default_rule": {
+                "name": "do_int",
+                "action": { "type": "int_set_header_3" }
+            }
+        },
+        "int_inst_4": {
+            "default_rule": {
+                "name": "do_int",
+                "action": { "type": "int_set_header_4" }
+            }
+        },
+        "int_inst_5": {
+            "default_rule": {
+                "name": "do_int",
+                "action": { "type": "int_set_header_5" }
+            }
+        },
+        "int_inst_6": {
+            "default_rule": {
+                "name": "do_int",
+                "action": { "type": "int_set_header_6" }
+            }
+        },
+        "int_inst_7": {
+            "default_rule": {
+                "name": "do_int",
+                "action": { "type": "int_set_header_7" }
+            }
+        },
+        "int_bos_0": {
+            "default_rule": {
+                "name": "do_int",
+                "action": { "type": "int_set_bos_0" }
+            }
+        },
+        "int_bos_1": {
+            "default_rule": {
+                "name": "do_int",
+                "action": { "type": "int_set_bos_1" }
+            }
+        },
+        "int_bos_2": {
+            "default_rule": {
+                "name": "do_int",
+                "action": { "type": "int_set_bos_2" }
+            }
+        },
+        "int_bos_3": {
+            "default_rule": {
+                "name": "do_int",
+                "action": { "type": "int_set_bos_3" }
+            }
+        },
+        "int_bos_4": {
+            "default_rule": {
+                "name": "do_int",
+                "action": { "type": "int_set_bos_4" }
+            }
+        },
+        "int_bos_5": {
+            "default_rule": {
+                "name": "do_int",
+                "action": { "type": "int_set_bos_5" }
+            }
+        },
+        "int_bos_6": {
+            "default_rule": {
+                "name": "do_int",
+                "action": { "type": "int_set_bos_6" }
+            }
+        },
+        "int_bos_7": {
+            "default_rule": {
+                "name": "do_int",
+                "action": { "type": "int_set_bos_7" }
+            }
+        },
+        "int_egress_tstamp": {
+            "default_rule": {
+                "name": "do_int",
+                "action": { "type": "update_egress_tstamp" }
+            }
+        }
+    }
+}
