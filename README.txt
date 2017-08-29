@@ -85,5 +85,54 @@ packet #1
     [2] ingress_ts | bos : 0x0 | value : 0x7661a076 | 
     [2] egress_ts | bos : 0x1 | value : 0x0x7661ba93 | 
 
-The first packet going into vf0_2 is a GPE INT packet with no intructions,
+The first packet going into vf0_2 is a GPE INT packet with no instructions,
 the second packet has instruction added for all three ingress stages.
+
+-----------------------------------------------------
+Installing and Testing P4 INT Transit with ICONICS:
+-----------------------------------------------------
+
+1.  Follow instructions on http://iconicsp4.cloudapp.net/ to install the NFP SDK RTE, setup access to the ICONICS repository and identifying your SmartNIC
+
+    To install the P4 basic loadbalancer and metering application:
+      yum install nfp-sdk6-p4-config-<smartnic>-p4_int_transit-<version>.noarch
+      
+    List all the available packages in the repo:
+      repoquery -qa --repoid=iconics
+
+2.  The ifbounce, decode_gpe_int.py and the needed pcap files  will be installed to:
+      /opt/nfp_pif/etc/smartnic-configs/<smartnic>-p4_int_transit/      
+      
+3.  Wait (around 2 minutes) for firmware to load onto the SmartNIC:
+      Use ifconfig to see when VFs have loaded before trying to run tests or look in /var/log/nfp-sdk6-rte.log
+
+4.  Run the test 
+    Run the traffic bounce utility on two terminals:
+    ifbounce vf0_0  
+    and
+    ifbounce vf0_1
+    this will return whatever traffic arrives on vf0_0 and vf0_1 back on the same
+    port untouched.
+
+    On one terminal run:
+    decode_gpe_int.py vf0_2
+    this will display the traffic into and out of the Netronome NIC.
+
+    on another terminal run to inject a packet:
+    tcpreplay -i vf0_2 gpe_bfoot.pcap
+
+    you should see the following output (note that your timestamp will be different):
+    packet #0
+    packet #1
+        [0] switch_id | bos : 0x0 | switch_id : 0xcafe | 
+        [0] ingress_ts | bos : 0x0 | value : 0x7661ee71 | 
+        [0] egress_ts | bos : 0x0 | value : 0x7661fe71 | 
+        [1] switch_id | bos : 0x0 | switch_id : 0xcafe | 
+        [1] ingress_ts | bos : 0x0 | value : 0x7661ca93 | 
+        [1] egress_ts | bos : 0x0 | value : 0x7661da93 | 
+        [2] switch_id | bos : 0x0 | switch_id : 0xcafe | 
+        [2] ingress_ts | bos : 0x0 | value : 0x7661a076 | 
+        [2] egress_ts | bos : 0x1 | value : 0x0x7661ba93 | 
+
+    The first packet going into vf0_2 is a GPE INT packet with no instructions,
+    the second packet has instruction added for all three ingress stages.
